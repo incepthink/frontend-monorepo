@@ -73,6 +73,9 @@ export function ConnectWallet({
             isDisabled={isSafeApp}
             display="flex"
             alignItems="center"
+            borderRadius={4}
+            fontSize={14}
+            paddingBlock={3}
             {...rest}
           >
             <CustomAvatar
@@ -81,7 +84,7 @@ export function ConnectWallet({
               ensImage={account.ensAvatar}
               mr={{ base: 0, sm: 'sm' }}
               rounded="full"
-              size={6}
+              size={5}
             />
 
             {/* hide text on very small screens */}

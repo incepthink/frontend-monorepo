@@ -72,7 +72,10 @@ export default function AggtraderNavbar() {
         zIndex: 1000,
       }}
     >
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+      <a
+        href="https://aggtrade.xyz/"
+        style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
+      >
         <div style={{ width: '40px' }}>
           <img src="/Aggtrade-logo.svg" alt="" style={{ width: '100%', objectFit: 'cover' }} />
         </div>
@@ -87,7 +90,7 @@ export default function AggtraderNavbar() {
         >
           AggTrade
         </h2>
-      </div>
+      </a>
       <ul
         style={{
           listStyle: 'none',

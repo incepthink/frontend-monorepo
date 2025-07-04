@@ -32,7 +32,7 @@ export function useNav() {
   ]
 
   function linkColorFor(path: string) {
-    return pathname === path ? 'font.highlight' : 'white'
+    return pathname === path ? '#00F5E0' : 'white'
   }
 
   return { defaultAppLinks, linkColorFor }
