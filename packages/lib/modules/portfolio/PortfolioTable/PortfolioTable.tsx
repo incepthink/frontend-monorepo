@@ -79,7 +79,7 @@ export function PortfolioTable() {
           minW="max-content"
           w="full"
         >
-          <VStack align="start" flex={1} minW="max-content" pb={{ base: '0', md: '0' }}>
+          <VStack align="start" flex={1} minW="max-content" pb={{ base: '3', md: '10' }}>
             <HStack w="full">
               <Box position="relative" top="0">
                 <Box
@@ -113,7 +113,7 @@ export function PortfolioTable() {
               />
             )} */}
           </VStack>
-          <Stack
+          {/* <Stack
             align={{ base: 'end', sm: 'center' }}
             direction="row"
             w={{ base: 'full', md: 'auto' }}
@@ -122,7 +122,8 @@ export function PortfolioTable() {
               selectedNetworks={selectedNetworks}
               selectedPoolTypes={selectedPoolTypes}
             />
-          </Stack>
+
+          </Stack> */}
         </Stack>
         {isConnected ? (
           <Card

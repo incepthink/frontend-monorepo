@@ -70,7 +70,7 @@ export function SortableHeader({
         >
           {label}
         </Text>
-        <Box color={color} fontSize="xs" ml="1">
+        <Box color={'white'} fontSize="xs" ml="1">
           {renderSortIcon()}
         </Box>
       </HStack>

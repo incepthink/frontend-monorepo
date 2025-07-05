@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import './pools.css'
 
 export const metadata: Metadata = {
-  title: 'AggTrade - Yeild Farming',
+  title: 'AggTrade - Yield Farming',
   description: `
     Explore DeFi liquidity pools or create your own.
     Provide liquidity to accumulate yield from swap fees

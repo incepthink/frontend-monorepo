@@ -14,7 +14,7 @@ import { BalancerLogoType } from '@bal/lib/components/imgs/BalancerLogoType'
 import { Footer } from '@repo/lib/shared/components/navs/Footer'
 
 export const metadata: Metadata = {
-  title: 'AggTrade - Yeild Farming',
+  title: 'AggTrade - Yield Farming',
   description: `Explore DeFi liquidity pools and swap tokens. The ultimate platform for custom liquidity solutions. AggTrade - Yeild Farming v3 perfectly balances
               simplicity and flexibility to reshape the future of AMMs.`,
   icons: [
