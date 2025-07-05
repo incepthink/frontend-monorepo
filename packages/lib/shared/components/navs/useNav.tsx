@@ -32,6 +32,12 @@ export function useNav() {
   ]
 
   function linkColorFor(path: string) {
+    console.log(pathname, path, 'PATH')
+
+    if (pathname.includes('/pools/') && path === '/pools') {
+      return '#00F5E0'
+    }
+
     return pathname === path ? '#00F5E0' : 'white'
   }
 

@@ -54,7 +54,7 @@ export function PoolDetail() {
         <ClaimProvider pools={[pool]}>
           <VStack spacing="2xl" w="full">
             <VStack spacing="md" w="full">
-              <PoolAlerts />
+              {/* <PoolAlerts /> */}
               <PoolHeader />
               {banners?.headerSrc && <CowPoolBanner />}
 
