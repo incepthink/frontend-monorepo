@@ -1,49 +1,69 @@
 'use client'
 
 import { ConnectWallet } from '@repo/lib/modules/web3/ConnectWallet'
-import React from 'react'
+import React, { useState } from 'react'
+import {
+  Box,
+  Flex,
+  HStack,
+  IconButton,
+  useDisclosure,
+  useBreakpointValue,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  VStack,
+  Text,
+  Image,
+  Link,
+} from '@chakra-ui/react'
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 
 interface NavLinkProps {
   href: string
   children: React.ReactNode
   isActive?: boolean
+  isMobile?: boolean
+  onClick?: () => void
 }
 
-function NavLink({ href, children, isActive }: NavLinkProps) {
+function NavLink({ href, children, isActive, isMobile, onClick }: NavLinkProps) {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
-    <a
+    <Link
       href={href}
+      onClick={onClick}
+      position="relative"
+      p={isMobile ? '12px 0' : '4px 8px'}
+      fontSize={isMobile ? '1.1rem' : '1.25rem'}
+      textDecoration="none"
+      color={href === '#' ? '#00ffe9' : 'white'}
+      transition="color 0.2s"
+      display="block"
+      width="100%"
+      _hover={{ textDecoration: 'none' }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
-        position: 'relative',
-        padding: '4px 8px',
-        fontSize: '1.25rem',
-        textDecoration: 'none',
-        color: `${href === '#' ? '#00ffe9' : 'white'}`,
-        transition: 'color 0.2s',
-        ...(isActive ? {} : {}),
-      }}
-      onMouseOver={e => {
-        ;(e.currentTarget as HTMLElement).style.color = '#00ffe9'
-      }}
-      onMouseOut={e => {
-        ;(e.currentTarget as HTMLElement).style.color = `${href === '#' ? '#00ffe9' : 'white'}`
+        color: isHovered ? '#00ffe9' : href === '#' ? '#00ffe9' : 'white',
       }}
     >
       {children}
-      <span
-        style={{
-          content: "''",
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          height: isActive ? '2px' : '0',
-          width: '100%',
-          background: 'linear-gradient(to right, #00FFE9, #003B3C)',
-          transition: 'height 0.2s',
-          display: 'block',
-        }}
+      <Box
+        position="absolute"
+        bottom={0}
+        left={0}
+        height={isActive ? '2px' : '0'}
+        width="100%"
+        background="linear-gradient(to right, #00FFE9, #003B3C)"
+        transition="height 0.2s"
+        display="block"
       />
-    </a>
+    </Link>
   )
 }
 
@@ -56,65 +76,137 @@ const navItems = [
 ]
 
 export default function AggtraderNavbar() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const isMobile = useBreakpointValue({ base: true, lg: false })
   const pathname = typeof window !== 'undefined' ? window.location.pathname : ''
 
   return (
-    <nav
-      style={{
-        position: 'sticky',
-        top: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '16px 40px',
-        backgroundColor: 'rgb(5, 14, 25)',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-        zIndex: 1000,
-      }}
+    <Box
+      as="nav"
+      position="sticky"
+      top={0}
+      bg="rgb(5, 14, 25)"
+      boxShadow="0 2px 4px rgba(0, 0, 0, 0.1)"
+      zIndex={1000}
     >
-      <a
-        href="https://aggtrade.xyz/"
-        style={{ display: 'flex', gap: '10px', alignItems: 'center' }}
+      <Flex
+        justify="space-between"
+        align="center"
+        px={{ base: '16px', lg: '40px' }}
+        py={{ base: '8px', lg: '16px' }}
+        minH={{ base: '64px', lg: '80px' }}
       >
-        <div style={{ width: '40px' }}>
-          <img src="/Aggtrade-logo.svg" alt="" style={{ width: '100%', objectFit: 'cover' }} />
-        </div>
-        <h2
-          style={{
-            fontSize: '1.5rem',
-            fontWeight: 600,
-            margin: 0,
-            cursor: 'pointer',
-            color: 'white',
-          }}
+        {/* Logo */}
+        <Link
+          href="https://aggtrade.xyz/"
+          display="flex"
+          alignItems="center"
+          gap="10px"
+          textDecoration="none"
+          _hover={{ textDecoration: 'none' }}
         >
-          AggTrade
-        </h2>
-      </a>
-      <ul
-        style={{
-          listStyle: 'none',
-          display: 'flex',
-          gap: '24px',
-          margin: 0,
-          padding: 0,
-        }}
-      >
-        {navItems.map(({ href, label }) => {
-          const isInternal = href.startsWith('/')
-          const isActive = isInternal && (pathname === href || pathname.startsWith(href))
+          <Box w={{ base: '32px', lg: '40px' }}>
+            <Image src="/Aggtrade-logo.svg" alt="" w="100%" objectFit="cover" />
+          </Box>
+          <Text
+            as="h2"
+            fontWeight={600}
+            color="white"
+            cursor="pointer"
+            fontSize={{ base: '1.25rem', lg: '1.5rem' }}
+            m={0}
+          >
+            AggTrade
+          </Text>
+        </Link>
 
-          return (
-            <li key={href} style={{ margin: 0 }}>
-              <NavLink href={href} isActive={isActive}>
-                {label}
-              </NavLink>
-            </li>
-          )
-        })}
-      </ul>
+        {/* Desktop Navigation */}
+        {!isMobile && (
+          <HStack spacing="24px" as="ul" listStyleType="none" m={0} p={0}>
+            {navItems.map(({ href, label }) => {
+              const isInternal = href.startsWith('/')
+              const isActive = isInternal && (pathname === href || pathname.startsWith(href))
 
-      <ConnectWallet />
-    </nav>
+              return (
+                <Box as="li" key={href} m={0}>
+                  <NavLink href={href} isActive={isActive}>
+                    {label}
+                  </NavLink>
+                </Box>
+              )
+            })}
+          </HStack>
+        )}
+
+        {/* Desktop Connect Button */}
+        {!isMobile && <ConnectWallet />}
+
+        {/* Mobile Menu */}
+        {isMobile && (
+          <Flex align="center" gap={2}>
+            <ConnectWallet />
+            <IconButton
+              aria-label="menu"
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+              variant="ghost"
+              color="white"
+              _hover={{
+                bg: 'rgba(255, 255, 255, 0.1)',
+              }}
+              onClick={isOpen ? onClose : onOpen}
+            />
+          </Flex>
+        )}
+      </Flex>
+
+      {/* Mobile Drawer */}
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+        <DrawerOverlay />
+        <DrawerContent bg="rgb(5, 14, 25)" color="white" maxW="280px">
+          <DrawerHeader
+            borderBottomWidth="1px"
+            borderBottomColor="rgba(255, 255, 255, 0.1)"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Text as="h3" color="white" fontWeight={600} fontSize="1.25rem" m={0}>
+              Menu
+            </Text>
+            <DrawerCloseButton
+              position="relative"
+              top="auto"
+              right="auto"
+              color="white"
+              _hover={{
+                bg: 'rgba(255, 255, 255, 0.1)',
+              }}
+            />
+          </DrawerHeader>
+
+          <DrawerBody p={0}>
+            <VStack spacing={0} align="stretch">
+              {navItems.map(({ href, label }) => {
+                const isInternal = href.startsWith('/')
+                const isActive = isInternal && (pathname === href || pathname.startsWith(href))
+
+                return (
+                  <Box
+                    key={href}
+                    _hover={{
+                      bg: 'rgba(0, 255, 233, 0.1)',
+                    }}
+                  >
+                    <NavLink href={href} isActive={isActive} isMobile={true} onClick={onClose}>
+                      {label}
+                    </NavLink>
+                  </Box>
+                )
+              })}
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
   )
 }

@@ -210,7 +210,7 @@ export function PoolContracts({ ...props }: CardProps) {
             w="full"
           >
             <GridItem>
-              <Text minW="120px" variant="secondary">
+              <Text minW="120px" variant="secondary" color={'white'}>
                 {contract.label}:
               </Text>
             </GridItem>
@@ -218,7 +218,7 @@ export function PoolContracts({ ...props }: CardProps) {
               <Link href={contract.explorerLink} target="_blank" variant="link">
                 <HStack gap="xxs">
                   <Text color="white">{abbreviateAddress(contract.address)}</Text>
-                  <ArrowUpRight size={12} />
+                  <ArrowUpRight color={'white'} size={12} />
                 </HStack>
               </Link>
             </GridItem>
@@ -257,7 +257,7 @@ export function PoolContracts({ ...props }: CardProps) {
                               {abbreviateAddress(hook.address)} (
                               {getHookName(hook, pool, hooksMetadata)})
                             </Text>
-                            <ArrowUpRight size={12} />
+                            <ArrowUpRight color={'white'} size={12} />
                           </HStack>
                         </Link>
                         {(index > 0 || !pool.hook) && <Text variant="secondary">(nested)</Text>}
@@ -275,7 +275,12 @@ export function PoolContracts({ ...props }: CardProps) {
             <GridItem>
               <Popover trigger="hover">
                 <PopoverTrigger>
-                  <Text className="tooltip-dashed-underline" minW="120px" variant="secondary">
+                  <Text
+                    className="tooltip-dashed-underline"
+                    minW="120px"
+                    variant="secondary"
+                    color={'white'}
+                  >
                     {rateProviders.length === 1 ? 'Rate provider:' : 'Rate providers:'}
                   </Text>
                 </PopoverTrigger>
@@ -299,7 +304,6 @@ export function PoolContracts({ ...props }: CardProps) {
                   }
 
                   return (
-
                     <HStack key={provider.tokenAddress}>
                       <TokenIcon
                         address={provider.tokenAddress}
@@ -314,10 +318,10 @@ export function PoolContracts({ ...props }: CardProps) {
                         variant="link"
                       >
                         <HStack gap="xxs">
-                          <Text color="link">
+                          <Text color="white">
                             {abbreviateAddress(provider.rateProviderAddress)}
                           </Text>
-                          <ArrowUpRight size={12} />
+                          <ArrowUpRight color={'white'} size={12} />
                         </HStack>
                       </Link>
                       {getRateProviderIcon(provider.priceRateProviderData, token)}
@@ -370,8 +374,8 @@ export function PoolContracts({ ...props }: CardProps) {
                         variant="link"
                       >
                         <HStack gap="xxs">
-                          <Text color="link">{abbreviateAddress(erc4626Token.address)}</Text>
-                          <ArrowUpRight size={12} />
+                          <Text color="white">{abbreviateAddress(erc4626Token.address)}</Text>
+                          <ArrowUpRight color={'white'} size={12} />
                         </HStack>
                       </Link>
                       {getErc4626Icon(erc4626Token.erc4626ReviewData, token)}

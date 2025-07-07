@@ -15,7 +15,7 @@ const setIsDesc = (id: GqlPoolOrderBy, currentSortingObj: PoolsColumnSort) =>
 
 export function PoolListTableHeader({ ...rest }) {
   const {
-    queryState: { sorting, setSorting },
+    queryState: { sorting, setSorting, userAddress },
   } = usePoolList()
   const { orderBy } = usePoolOrderByState()
   const sortingObj = sorting[0]
@@ -30,26 +30,34 @@ export function PoolListTableHeader({ ...rest }) {
   }
 
   return (
-    <Grid
-      {...rest}
-      p={['sm', 'md']}
-      w="full"
-      boxShadow="inset 0px 4px 34px rgba(0, 255, 233, 0.4)"
-      borderRadius={'16px 16px 0px 0px'}
-    >
+    <Grid {...rest} p={['sm', 'md']} w="full" borderRadius={'16px 16px 0px 0px'}>
       <GridItem>
         <VStack align="start" w="full">
           <Icon as={Globe} boxSize="5" color="white" />
         </VStack>
       </GridItem>
+
       <GridItem sx={{ color: 'white' }}>
-        {PROJECT_CONFIG.options.showPoolName ? <PoolListPoolNamesTokens /> : 'Pool name'}
+        <Text fontWeight="bold" color={'white'}>
+          {PROJECT_CONFIG.options.showPoolName ? <PoolListPoolNamesTokens /> : 'Pool name'}
+        </Text>
       </GridItem>
+
       <GridItem justifySelf="start">
         <Text sx={{ color: 'white' }} fontWeight="bold" textAlign="left">
           Details
         </Text>
       </GridItem>
+
+      {/* Conditionally render user balance column header */}
+      {userAddress && (
+        <GridItem justifySelf="end">
+          <Text sx={{ color: 'white' }} fontWeight="bold" textAlign="right">
+            My Balance
+          </Text>
+        </GridItem>
+      )}
+
       {orderBy.map(orderByItem => (
         <GridItem justifySelf="end" key={orderByItem}>
           <SortableHeader

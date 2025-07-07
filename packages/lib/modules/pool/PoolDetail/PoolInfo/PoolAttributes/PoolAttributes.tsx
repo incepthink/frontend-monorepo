@@ -24,7 +24,9 @@ export function PoolAttributes() {
                 width="full"
               >
                 <Box minWidth="160px">
-                  <Text variant={{ base: 'primary', md: 'secondary' }}>{attribute.title}:</Text>
+                  <Text variant={{ base: 'primary', md: 'secondary' }} color={'white'}>
+                    {attribute.title}:
+                  </Text>
                 </Box>
                 {attribute.link ? (
                   <Link href={attribute.link} target="_blank" variant="link">

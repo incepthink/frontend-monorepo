@@ -2,7 +2,6 @@ import { useDisclosure } from '@chakra-ui/hooks'
 import {
   Box,
   Button,
-  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -28,17 +27,11 @@ type NavLinkProps = {
   onClick?: () => void
 }
 
-type EcosystemLinkProps = {
-  ecosystemLinks: AppLink[]
-}
-
 type SocialLinkProps = {
   socialLinks: AppLink[]
 }
 
-type MobileNavProps = NavLinkProps &
-  EcosystemLinkProps &
-  SocialLinkProps & { LogoType: React.FC<any> }
+type MobileNavProps = NavLinkProps & SocialLinkProps
 
 function NavLinks({ appLinks, onClick, customLinks }: NavLinkProps) {
   const { linkColorFor } = useNav()
@@ -54,7 +47,6 @@ function NavLinks({ appLinks, onClick, customLinks }: NavLinkProps) {
           fontSize="xl"
           gap="xs"
           href={link.href}
-          isExternal
           key={link.href}
           onClick={onClick}
           prefetch
@@ -73,32 +65,6 @@ function NavLinks({ appLinks, onClick, customLinks }: NavLinkProps) {
   )
 }
 
-function EcosystemLinks({ ecosystemLinks }: EcosystemLinkProps) {
-  return (
-    <VStack align="start" w="full">
-      <Text color="grayText" mb="sm" size="xs">
-        Ecosystem
-      </Text>
-      {ecosystemLinks.map(link => (
-        <Link
-          alignItems="center"
-          display="flex"
-          gap="xs"
-          href={link.href}
-          isExternal
-          key={link.href}
-          variant="nav"
-        >
-          {link.label}
-          <Box color="grayText">
-            <ArrowUpRight size={14} />
-          </Box>
-        </Link>
-      ))}
-    </VStack>
-  )
-}
-
 function SocialLinks({ socialLinks }: SocialLinkProps) {
   return (
     <HStack justify="space-between" w="full">
@@ -111,21 +77,9 @@ function SocialLinks({ socialLinks }: SocialLinkProps) {
   )
 }
 
-export function MobileNav({
-  appLinks,
-  ecosystemLinks,
-  socialLinks,
-  LogoType,
-  customLinks,
-}: MobileNavProps) {
+export function MobileNav({ appLinks, customLinks }: MobileNavProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef(null)
-  const router = useRouter()
-
-  function homeRedirect() {
-    onClose()
-    router.push('/')
-  }
 
   return (
     <>
@@ -135,18 +89,15 @@ export function MobileNav({
       <Drawer finalFocusRef={btnRef} isOpen={isOpen} onClose={onClose} placement="right">
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
+          <DrawerCloseButton color={'white'} />
           <DrawerHeader>
-            <LogoType onClick={homeRedirect} width="106px" />
+            <Text color={'white'} fontSize="lg" fontWeight="600">
+              Menu
+            </Text>
           </DrawerHeader>
           <DrawerBody>
             <NavLinks appLinks={appLinks} customLinks={customLinks} onClick={onClose} />
-            <Divider my={4} />
-            <EcosystemLinks ecosystemLinks={ecosystemLinks} />
           </DrawerBody>
-          <DrawerFooter>
-            <SocialLinks socialLinks={socialLinks} />
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

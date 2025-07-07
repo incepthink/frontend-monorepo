@@ -16,7 +16,7 @@ export function NavBarContainer() {
     options: { allowCreateWallet },
   } = PROJECT_CONFIG
 
-  const allAppLinks = [...defaultAppLinks, ...appLinks]
+  const allAppLinks = [...defaultAppLinks]
 
   return (
     <AnimatePresence>
@@ -28,14 +28,7 @@ export function NavBarContainer() {
         <NavBar
           allowCreateWallet={allowCreateWallet}
           appLinks={allAppLinks}
-          mobileNav={
-            <MobileNav
-              appLinks={allAppLinks}
-              ecosystemLinks={ecosystemLinks}
-              LogoType={BalancerLogoType}
-              socialLinks={socialLinks}
-            />
-          }
+          mobileNav={<MobileNav appLinks={allAppLinks} socialLinks={socialLinks} />}
         />
       </motion.div>
     </AnimatePresence>
