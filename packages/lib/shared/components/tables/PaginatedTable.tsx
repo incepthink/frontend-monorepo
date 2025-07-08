@@ -40,9 +40,6 @@ export function PaginatedTable<T>({
   const [previousPageCount, setPreviousPageCount] = useState(0)
 
   useEffect(() => {
-    // When the number of pages changes (eg. new filter) we have to go back to
-    // the first page because the current page could not exist anymore or could
-    // be a different page and that can be confusing to the user
     if (paginationProps && paginationProps.totalPageCount !== previousPageCount) {
       setPreviousPageCount(paginationProps.totalPageCount)
       paginationProps.goToFirstPage()
@@ -51,68 +48,80 @@ export function PaginatedTable<T>({
 
   return (
     <>
-      <VStack
-        className="hide-scrollbar"
-        gap="0"
-        overflowX="scroll"
-        sx={{ width: '100%' }}
-        backgroundColor={'transparent'}
-      >
-        <TableHeader />
-        <Divider />
-        <Box position="relative" sx={{ width: '100%' }}>
-          {items.length > 0 && (
-            <VStack gap="0">
-              {items.map((item, index) => (
-                <Box key={getRowId(item, index)} w="full">
+      <Box className="hide-scrollbar" overflowX="auto" width="100%" backgroundColor={'transparent'}>
+        {/* Use table layout for more predictable width behavior */}
+        <Box display="table" width="100%" minWidth="600px">
+          {/* Header */}
+          <Box display="table-header-group">
+            <Box display="table-row">
+              <TableHeader />
+            </Box>
+            {/* Divider below header */}
+            <Box display="table-row">
+              <Box display="table-cell">
+                <Divider borderColor="gray.600" />
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Body */}
+          <Box display="table-row-group">
+            {items.length > 0 &&
+              items.map((item, index) => (
+                <Box key={getRowId(item, index)} display="table-row">
                   <TableRow index={index} item={item} />
                 </Box>
               ))}
-            </VStack>
-          )}
-          {!loading && items.length === 0 && (
-            <Center py="2xl">
-              <Text px="md" color="white">
-                {noItemsFoundLabel}
-              </Text>
-            </Center>
-          )}
-          {loading &&
-            items.length === 0 &&
-            Array.from({ length: loadingLength }).map((_, index) => (
-              <Box key={`table-row-skeleton-${index}`} px="xs" py="xs" w="full">
-                <Skeleton height="68px" w="full" />
+
+            {!loading && items.length === 0 && (
+              <Box display="table-row">
+                <Box display="table-cell">
+                  <Center py="2xl">
+                    <Text px="md" color="white">
+                      {noItemsFoundLabel}
+                    </Text>
+                  </Center>
+                </Box>
               </Box>
-            ))}
-          {loading && items.length > 0 && (
-            <Box>
-              <Box
-                style={{
-                  position: 'absolute',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '100%',
-                  height: '100%',
-                  top: 0,
-                  left: 0,
-                  borderRadius: 10,
-                  zIndex: 10,
-                  backdropFilter: 'blur(3px)',
-                }}
-              >
-                <Center py="4xl">
-                  <Spinner size="xl" />
-                </Center>
-              </Box>
-            </Box>
-          )}
+            )}
+
+            {loading &&
+              items.length === 0 &&
+              Array.from({ length: loadingLength }).map((_, index) => (
+                <Box key={`table-row-skeleton-${index}`} display="table-row">
+                  <Box display="table-cell" px="xs" py="xs">
+                    <Skeleton height="68px" w="full" />
+                  </Box>
+                </Box>
+              ))}
+          </Box>
         </Box>
-      </VStack>
+
+        {loading && items.length > 0 && (
+          <Box
+            position="absolute"
+            top={0}
+            left={0}
+            right={0}
+            bottom={0}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            bg="blackAlpha.500"
+            backdropFilter="blur(3px)"
+            zIndex={10}
+          >
+            <Spinner size="xl" />
+          </Box>
+        )}
+      </Box>
+
       {showPagination && paginationProps && (
         <>
-          <Divider />
-          <Pagination p="md" {...paginationProps} {...paginationStyles} />
+          <Divider width="100%" />
+          <Box width="100%">
+            <Pagination p="md" {...paginationProps} {...paginationStyles} />
+          </Box>
         </>
       )}
     </>
