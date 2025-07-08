@@ -269,7 +269,11 @@ export function NavBar({
       {...rest}
     >
       <AggtraderNavbar />
-      <HStack as="nav" justify="center" padding={{ base: 'sm', md: 'md' }}>
+      <HStack
+        as="nav"
+        justify={{ sm: 'flex-end', md: 'center' }}
+        padding={{ base: 'sm', md: 'md' }}
+      >
         <HStack
           animate="show"
           as={motion.div}

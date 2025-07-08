@@ -55,12 +55,12 @@ export function PaginatedTable<T>({
         className="hide-scrollbar"
         gap="0"
         overflowX="scroll"
-        w="full"
+        sx={{ width: '100%' }}
         backgroundColor={'transparent'}
       >
         <TableHeader />
         <Divider />
-        <Box position="relative" w="full">
+        <Box position="relative" sx={{ width: '100%' }}>
           {items.length > 0 && (
             <VStack gap="0">
               {items.map((item, index) => (

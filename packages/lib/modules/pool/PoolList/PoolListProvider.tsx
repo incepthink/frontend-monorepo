@@ -51,8 +51,11 @@ export function usePoolListLogic({
 
   let pools = loading && previousData ? previousData.pools : data?.pools || []
 
-  const ALLOWED = new Set(['WETH'])
-  pools = pools.filter(pool => pool.poolTokens.some(token => ALLOWED.has(token.symbol)))
+  const ALLOWED_CHAIN = 'MAINNET'
+  const ALLOWED_TYPE = 'COMPOSABLE_STABLE'
+
+  pools = pools.filter(pool => pool.chain === ALLOWED_CHAIN)
+  console.log('POOLS:: ', pools)
 
   const poolsData = pools.map(pool => removeHookDataFromPoolIfNecessary(pool)) as PoolListItem[]
 

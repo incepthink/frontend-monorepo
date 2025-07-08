@@ -68,7 +68,7 @@ export function AcceptPoliciesModal() {
     <Modal isCentered isOpen={isOpen} onClose={handleOnClose} preserveScrollBarGap>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>{`Accept ${projectName} policies`}</ModalHeader>
+        <ModalHeader color={'white'}>{`Accept ${projectName} policies`}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <VStack align="flex-start" gap="md">

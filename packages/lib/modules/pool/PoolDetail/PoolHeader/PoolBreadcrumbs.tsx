@@ -21,6 +21,7 @@ export function PoolBreadcrumbs() {
         </Box>
       }
       spacing="sm"
+      sx={{ marginTop: 5 }}
     >
       <BreadcrumbItem>
         <BreadcrumbLink href="/">

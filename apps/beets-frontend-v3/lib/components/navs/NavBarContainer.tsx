@@ -16,14 +16,7 @@ export function NavBarContainer() {
   const { defaultAppLinks } = useNav()
   const allAppLinks = [...defaultAppLinks, ...appLinks]
 
-  const mobileNav = (
-    <MobileNav
-      appLinks={allAppLinks}
-      ecosystemLinks={ecosystemLinks}
-      LogoType={BeetsLogoType}
-      socialLinks={socialLinks}
-    />
-  )
+  const mobileNav = <MobileNav appLinks={allAppLinks} socialLinks={socialLinks} />
 
   return (
     <AnimatePresence>

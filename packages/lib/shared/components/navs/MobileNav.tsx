@@ -83,23 +83,25 @@ export function MobileNav({ appLinks, customLinks }: MobileNavProps) {
 
   return (
     <>
-      <Button onClick={onOpen} ref={btnRef} variant="tertiary">
-        <Menu size={18} />
-      </Button>
-      <Drawer finalFocusRef={btnRef} isOpen={isOpen} onClose={onClose} placement="right">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton color={'white'} />
-          <DrawerHeader>
-            <Text color={'white'} fontSize="lg" fontWeight="600">
-              Menu
-            </Text>
-          </DrawerHeader>
-          <DrawerBody>
-            <NavLinks appLinks={appLinks} customLinks={customLinks} onClick={onClose} />
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <div>
+        <Button onClick={onOpen} ref={btnRef} variant="tertiary" sx={{ alignSelf: 'flex-end' }}>
+          <Menu size={18} />
+        </Button>
+        <Drawer finalFocusRef={btnRef} isOpen={isOpen} onClose={onClose} placement="right">
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton color={'white'} />
+            <DrawerHeader>
+              <Text color={'white'} fontSize="lg" fontWeight="600">
+                Menu
+              </Text>
+            </DrawerHeader>
+            <DrawerBody>
+              <NavLinks appLinks={appLinks} customLinks={customLinks} onClick={onClose} />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </div>
     </>
   )
 }
